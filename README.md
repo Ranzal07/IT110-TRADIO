@@ -1,5 +1,6 @@
 # IT110-TRADI0
 
+I have no partner for this activity.
 
 CHANGES:
 
