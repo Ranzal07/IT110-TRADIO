@@ -10,7 +10,7 @@
 				':idnumber' => $_POST['userdata']['idnumber'],
 				':firstname' => $_POST['userdata']['firstname'],
 				':lastname' => $_POST['userdata']['lastname'],
-				':gender' => (int) $_POST['userdata']['gender'],
+				':gender' => $_POST['userdata']['gender'],
 				':bday' => $_POST['userdata']['bday'],
 				':program' => $_POST['userdata']['program'],
 				':yearlevel' => (int) $_POST['userdata']['yearlevel'],
