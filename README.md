@@ -1,4 +1,5 @@
-# IT110-TRADI0
+# IT110 - UPDATE & DELETE USER
+Tradio, Lavranz R.
 
 I have no partner for this activity.
 
