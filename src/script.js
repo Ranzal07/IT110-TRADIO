@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
 	
-	$(document).on("click","#updateBTN", function(){ 
+	$(document).on("click","#updateBTN", function(){ /*------------------Clicking-the-UPDATE-button---------------------*/
 		$('#myModal').modal('show')
 		$tr = $(this).closest('tr');
 		var data = $tr.children('td').map(function(){
@@ -88,7 +88,7 @@ $(document).ready(function(){
 	});	
 
 
-	$(document).on("click","#saveBTN", function(e){  
+	$(document).on("click","#saveBTN", function(e){  /*------------------Clicking-the-SAVE-button---------------------*/
 		var id2 = $('#id2').val();
 		var idnumber2 = $('#idnumber2').val();
 		var firstname2 = $('#firstname2').val();
@@ -124,12 +124,14 @@ $(document).ready(function(){
 		});
 		e.preventDefault();
    	});    
-		$(document).on("click","#closeBTN", function(){  
+	
+	
+		$(document).on("click","#closeBTN", function(){  /*------------------Clicking-the-CLOSE-button---------------------*/
 		$('#myModal').modal('hide')
 	});
 
 
-	$(document).on("click",".delete",function(e){
+	$(document).on("click",".delete",function(e){ /*------------------Clicking-the-DELETE-button---------------------*/
 		var id = $(this).attr("id");
 		swal({
 			title: "Think Twice!",
