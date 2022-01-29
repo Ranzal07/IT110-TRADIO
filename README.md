@@ -10,3 +10,9 @@ database name "web101" changed into "it110" //
 Gender type "INT" changed into "VARCHAR" // 
 Gender value "0/1" changed into "Female/Male"
 //
+
+NEW CHANGES:
+
+//
+script.js: Changed the function for deleting rows. Updating the user data can now be displayed in the row table without reloading the page.
+//
