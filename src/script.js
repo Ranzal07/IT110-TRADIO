@@ -144,14 +144,15 @@ $(document).ready(function(){
 
 
 	$(document).on("click",".delete",function(e){ /*------------------Clicking-the-DELETE-button---------------------*/
-		var tr = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-DELETE-button::*/
+		this_row = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-DELETE-button::*/
 
-		var data = tr.children('td').map(function(){
+		var data = this_row.children('td').map(function(){
 			return $(this).text();
 		}).get();
 		
-		$('#id').val(data[0]);
-		var id = $('#id').val();
+		$('#id2').val(data[0]);
+		var id = $('#id2').val();
+		
 		swal({
 			title: "THINK TWICE!",
 			text: "It will not be undone once deleted!",
@@ -174,7 +175,7 @@ $(document).ready(function(){
 								buttons: false
 							});
 						}else{
-							tr.remove();
+							this_row.remove();
 							swal({
 								text: "User Account deleted successfully!",
 								icon: "success",
@@ -182,6 +183,7 @@ $(document).ready(function(){
 								buttons: false
 							});
 						}
+						this_row = null;
 					},
 				});
 			}else{
