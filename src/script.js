@@ -72,15 +72,9 @@ $(document).ready(function(){
 	var this_row = null; /*<-----Used-as-a-global-variable-to-get-the-selected-row::*/
 	
 	$(document).on("click","#updateBTN", function(){ /*------------------Clicking-the-UPDATE-button---------------------*/
-<<<<<<< HEAD
 		this_row = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-UPDATE-button::*/
 
 		var data = this_row.children('td').map(function(){
-=======
-		$('#myModal').modal('show')
-		$tr = $(this).closest('tr');
-		var data = $tr.children('td').map(function(){
->>>>>>> 8e10926069564cef7dff0866552d3c371753f05b
 			return $(this).text();
 		}).get();
 
@@ -99,7 +93,6 @@ $(document).ready(function(){
 	$(document).on("click","#saveBTN", function(e){  /*------------------Clicking-the-SAVE-button---------------------*/
 		var user2={};
 
-<<<<<<< HEAD
 		user2.id2 = $('#id2').val();
 		user2.idnumber2 = $('#idnumber2').val();
 		user2.firstname2 = $('#firstname2').val();
@@ -109,18 +102,6 @@ $(document).ready(function(){
 		user2.program2 = $('#program2').val();
 		user2.yearlevel2 = $('#yearlevel2').val();
 		
-=======
-
-	$(document).on("click","#saveBTN", function(e){  /*------------------Clicking-the-SAVE-button---------------------*/
-		var id2 = $('#id2').val();
-		var idnumber2 = $('#idnumber2').val();
-		var firstname2 = $('#firstname2').val();
-		var lastname2 = $('#lastname2').val();
-		var gender2 = $('#gender2').val();
-		var bday2 = $('#bday2').val();
-		var program2 = $('#program2').val();
-		var yearlevel2 = $('#yearlevel2').val();
->>>>>>> 8e10926069564cef7dff0866552d3c371753f05b
 		$.ajax({
 			type:"POST",
 			data:{action:"update", user2:user2},
@@ -155,22 +136,14 @@ $(document).ready(function(){
 		});
 		e.preventDefault();
    	});    
-<<<<<<< HEAD
 
 	
 		$(document).on("click","#closeBTN", function(){  /*------------------Clicking-the-CLOSE-button---------------------*/
 		$('#myModal').modal('hide');
-=======
-	
-	
-		$(document).on("click","#closeBTN", function(){  /*------------------Clicking-the-CLOSE-button---------------------*/
-		$('#myModal').modal('hide')
->>>>>>> 8e10926069564cef7dff0866552d3c371753f05b
 	});
 
 
 	$(document).on("click",".delete",function(e){ /*------------------Clicking-the-DELETE-button---------------------*/
-<<<<<<< HEAD
 		var tr = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-DELETE-button::*/
 
 		var data = tr.children('td').map(function(){
@@ -179,9 +152,6 @@ $(document).ready(function(){
 		
 		$('#id').val(data[0]);
 		var id = $('#id').val();
-=======
-		var id = $(this).attr("id");
->>>>>>> 8e10926069564cef7dff0866552d3c371753f05b
 		swal({
 			title: "THINK TWICE!",
 			text: "It will not be undone once deleted!",
