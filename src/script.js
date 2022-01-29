@@ -22,7 +22,7 @@ $(document).ready(function(){
 					swal({
 						text: "New User Account added successfully!",
 						icon: "success",
-						timer: 2000,
+						timer: 1500,
 						buttons: false
 					});
 					user.id = idresponse;
@@ -50,8 +50,8 @@ $(document).ready(function(){
 	}
 	
 	function appendUser(user, table){	
-		row = "<tr id='"+user.id+"'>"+
-				"<td scope=\"row\">" + user.id +"</td>"+
+		row = "<tr>"+
+				"<td scope=\"row\">" + "<b>" + user.id + "</b>" + "</td>"+ 
 				"<td>" + user.idnumber +"</td>"+
 				"<td>" + user.firstname +"</td>"+
 				"<td>" + user.lastname +"</td>"+
@@ -60,7 +60,7 @@ $(document).ready(function(){
 				"<td>" + user.program +"</td>"+
 				"<td>" + user.yearlevel +"</td>"+
 				"<td>" + "<button type='button'" + "class='btn btn-primary update'" + "id='updateBTN'" + "<b>UPDATE</b>" + "</button>" + "</td>" +
-		    	"<td>" + "<button type='button'" + "class='btn btn-danger delete'" + "id='"+user.id+"'" + "<b>DELETE</b>" + "</button>" + "</td>" +
+		    	"<td>" + "<button type='button'" + "class='btn btn-danger delete'" + "id='deleteBTN'" + "<b>DELETE</b>" + "</button>" + "</td>" +
 			  "</tr>";		
 		table.append(row);
 	}
@@ -69,14 +69,17 @@ $(document).ready(function(){
 	getUsers();
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+	var this_row = null; /*<-----Used-as-a-global-variable-to-get-the-selected-row::*/
 	
-	$(document).on("click","#updateBTN", function(){ 
-		$('#myModal').modal('show')
-		$tr = $(this).closest('tr');
-		var data = $tr.children('td').map(function(){
+	$(document).on("click","#updateBTN", function(){ /*------------------Clicking-the-UPDATE-button---------------------*/
+		this_row = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-UPDATE-button::*/
+
+		var data = this_row.children('td').map(function(){
 			return $(this).text();
 		}).get();
 
+		$('#myModal').modal('show')
+		
 		$('#id2').val(data[0]);
 		$('#idnumber2').val(data[1]);
 		$('#firstname2').val(data[2]);
@@ -86,53 +89,71 @@ $(document).ready(function(){
 		$('#program2').val(data[6]);
 		$('#yearlevel2').val(data[7]);
 	});	
+	
+	$(document).on("click","#saveBTN", function(e){  /*------------------Clicking-the-SAVE-button---------------------*/
+		var user2={};
 
-
-	$(document).on("click","#saveBTN", function(e){  
-		var id2 = $('#id2').val();
-		var idnumber2 = $('#idnumber2').val();
-		var firstname2 = $('#firstname2').val();
-		var lastname2 = $('#lastname2').val();
-		var gender2 = $('#gender2').val();
-		var bday2 = $('#bday2').val();
-		var program2 = $('#program2').val();
-		var yearlevel2 = $('#yearlevel2').val();
+		user2.id2 = $('#id2').val();
+		user2.idnumber2 = $('#idnumber2').val();
+		user2.firstname2 = $('#firstname2').val();
+		user2.lastname2 = $('#lastname2').val();
+		user2.gender2 = $('#gender2').val();
+		user2.bday2 = $('#bday2').val();
+		user2.program2 = $('#program2').val();
+		user2.yearlevel2 = $('#yearlevel2').val();
+		
 		$.ajax({
 			type:"POST",
-			data:{action:"update", id2:id2, idnumber2:idnumber2, firstname2:firstname2, lastname2:lastname2, gender2:gender2, bday2:bday2, program2:program2, yearlevel2:yearlevel2},
+			data:{action:"update", user2:user2},
 			url:"src/php/user.php",
 			success:function(response){
 				if(response.error){
 					swal({
 						text: "Opps... failed to update the user account!",
 						icon: "error",
-						timer: 3000,
+						timer: 1500,
 						buttons: false
 					});
-					setTimeout(function(){location.href="index.html"} , 1500); 
-				}
-				else{
+				}else{
+					$(this_row).find('td:eq(1)').text(user2.idnumber2);
+					$(this_row).find('td:eq(2)').text(user2.firstname2);
+					$(this_row).find('td:eq(3)').text(user2.lastname2);
+					$(this_row).find('td:eq(4)').text(user2.gender2);
+					$(this_row).find('td:eq(5)').text(user2.bday2);
+					$(this_row).find('td:eq(6)').text(user2.program2);
+					$(this_row).find('td:eq(7)').text(user2.yearlevel2);
+					
 					swal({
 						text: "User Account updated successfully!",
 						icon: "success",
-						timer: 3000,
+						timer: 1500,
 						buttons: false
 					});
-					setTimeout(function(){location.href="index.html"} , 1500); 
+					$('#myModal').modal('hide');
+					this_row = null;
 				}
 			},
 		});
 		e.preventDefault();
    	});    
-		$(document).on("click","#closeBTN", function(){  
-		$('#myModal').modal('hide')
+
+	
+		$(document).on("click","#closeBTN", function(){  /*------------------Clicking-the-CLOSE-button---------------------*/
+		$('#myModal').modal('hide');
 	});
 
 
-	$(document).on("click",".delete",function(e){
-		var id = $(this).attr("id");
+	$(document).on("click",".delete",function(e){ /*------------------Clicking-the-DELETE-button---------------------*/
+		var tr = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-DELETE-button::*/
+
+		var data = tr.children('td').map(function(){
+			return $(this).text();
+		}).get();
+		
+		$('#id').val(data[0]);
+		var id = $('#id').val();
 		swal({
-			title: "Think Twice!",
+			title: "THINK TWICE!",
 			text: "It will not be undone once deleted!",
 			icon: "warning",
 			buttons: ["NO", "YES"],
@@ -140,7 +161,6 @@ $(document).ready(function(){
 		})
 		.then((willDelete) => {
 			if(willDelete){
-				$(this).closest('tr').remove();
 				$.ajax({
 					type:"POST",
 					data:{action:"delete", id:id},
@@ -150,24 +170,24 @@ $(document).ready(function(){
 							swal({
 								text: "Opps... failed to delete the user account!",
 								icon: "error",
-								timer: 3000,
+								timer: 1500,
 								buttons: false
 							});
-						}
-						else{
+						}else{
+							tr.remove();
 							swal({
 								text: "User Account deleted successfully!",
 								icon: "success",
-								timer: 3000,
+								timer: 1500,
 								buttons: false
 							});
 						}
 					},
 				});
-			}else {
+			}else{
 				swal({
 					text: "The user account is safe!",
-					timer: 2000,
+					timer: 1500,
 					buttons: false
 				});
 			}
@@ -176,11 +196,3 @@ $(document).ready(function(){
 	});
 
 });
-
-
-
-
-
-
-
-
