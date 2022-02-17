@@ -17,7 +17,12 @@ $(document).ready(function(){
 				idresponse = jQuery.parseJSON(response);
 				var table = $("#usertable tbody");
 				if(idresponse==0){
-					alert("Error saving the user!");
+					swal({
+						text: "Opps... failed to add the user account!",
+						icon: "error",
+						timer: 2500,
+						buttons: false
+					});
 				}else{
 					swal({
 						text: "New User Account added successfully!",
@@ -71,7 +76,7 @@ $(document).ready(function(){
 /*--------------------------------------------------------------------------------------------------------------------------------------------*/
 	var this_row = null; /*<-----Used-as-a-global-variable-to-get-the-selected-row::*/
 	
-	$(document).on("click","#updateBTN", function(){ /*------------------Clicking-the-UPDATE-button---------------------*/
+	$(document).on("click","#updateBTN", function(e){ /*------------------Clicking-the-UPDATE-button---------------------*/
 		this_row = $(this).closest('tr'); /*<-----Get-the-selected-row-under-clicking-the-UPDATE-button::*/
 
 		var data = this_row.children('td').map(function(){
@@ -88,6 +93,8 @@ $(document).ready(function(){
 		$('#bday2').val(data[5]);
 		$('#program2').val(data[6]);
 		$('#yearlevel2').val(data[7]);
+
+		e.preventDefault();
 	});	
 	
 	$(document).on("click","#saveBTN", function(e){  /*------------------Clicking-the-SAVE-button---------------------*/
@@ -137,6 +144,7 @@ $(document).ready(function(){
 		e.preventDefault();
    	});    
 
+	   
 	
 		$(document).on("click","#closeBTN", function(){  /*------------------Clicking-the-CLOSE-button---------------------*/
 		$('#myModal').modal('hide');
@@ -182,6 +190,7 @@ $(document).ready(function(){
 								timer: 1500,
 								buttons: false
 							});
+							checkUsers();
 						}
 						this_row = null;
 					},
@@ -196,5 +205,16 @@ $(document).ready(function(){
 		});
 		e.preventDefault();
 	});
+
+	function checkUsers(){
+		$.ajax({
+			type:"GET",
+			data:{action:"checkusers"},
+			url:"src/php/user.php",
+			success:function(response){
+				console.log(response);
+			},
+		});
+	}
 
 });

@@ -78,6 +78,19 @@
 		}
 	}
 
+	else if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action']=="checkusers"){
+		$rows = "SELECT * FROM user";
+		$statement = $pdo->query($rows);
+		$rows_count = $statement->rowCount();
+
+		if (!$rows_count > 0) {
+			$reset_id = "ALTER TABLE user AUTO_INCREMENT = 1";
+			$statement = $pdo->query($reset_id);
+			$statement->execute();
+			$pdo->commit();
+		}
+	}
+
  ?>
 
  
